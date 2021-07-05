@@ -1,6 +1,5 @@
 /* global VK */
-import config from "config";
 
-VK.init({ apiId: config.get("APP_ID") });
+VK.init({ apiId: process.env.REACT_APP_VK_APP_ID });
 
 export default VK;
