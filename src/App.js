@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import { useStore } from "effector-react";
+import { $session, login, logout } from "./store";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const { loading, user, isAuthenticated } = useStore($session);
+
+	if (loading) {
+		return <p>Загрзука...</p>;
+	}
+
+	if (!isAuthenticated) {
+		return <button onClick={login}>Авторизоваться</button>;
+	}
+
+	return (
+		<div>
+			<p>
+				<a href={user.href} target="_blank" rel="noreferrer">
+					{user.first_name} {user.last_name}
+				</a>
+			</p>
+			<button onClick={logout}>Разлогиниться</button>
+		</div>
+	);
 }
 
 export default App;
